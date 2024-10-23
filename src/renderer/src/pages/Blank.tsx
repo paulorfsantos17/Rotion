@@ -1,3 +1,4 @@
+import { Editor } from '../components/Editor'
 import { ToC } from '../components/ToC'
 export function Blank() {
   return (
@@ -13,7 +14,9 @@ export function Blank() {
           </ToC.Section>
         </ToC.Root>
       </aside>
-      <section className="flex-1 flex flex-col items-center">fasdfasd</section>
+      <section className="flex-1 flex flex-col items-center">
+        <Editor />
+      </section>
     </main>
   )
 }
