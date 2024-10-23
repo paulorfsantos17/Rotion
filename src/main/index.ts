@@ -5,6 +5,8 @@ import path, { join } from 'node:path'
 
 import { createFileRoute, createURLRoute } from 'electron-router-dom'
 
+import './ipc'
+
 function createWindow(): void {
   if (process.platform === 'darwin') {
     app.dock.setIcon(path.resolve(__dirname, 'icon.png'))
