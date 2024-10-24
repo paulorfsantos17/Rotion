@@ -11,7 +11,7 @@ const tsConfigPaths = tsConfigPathsPlugin({
 export default defineConfig({
   main: {
     plugins: [externalizeDepsPlugin(), tsConfigPaths],
-    publicDir: path.resolve('resources'),
+    publicDir: path.resolve('public'),
   },
   preload: {
     plugins: [externalizeDepsPlugin(), tsConfigPaths],
