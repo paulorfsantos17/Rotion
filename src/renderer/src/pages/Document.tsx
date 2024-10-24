@@ -1,15 +1,46 @@
 import { ToC } from '../components/ToC'
-import { Editor } from '../components/Editor'
+import { Editor, type OnContentUpdatedParams } from '../components/Editor'
 import { useParams } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import type { Document } from '~/src/shared/types/ipc'
 
-export function Document() {
+export function DocumentPage() {
   const { id } = useParams<{ id: string }>()
+  const queryClient = useQueryClient()
+
   const { data: response, isFetching } = useQuery({
     queryKey: ['document', id],
     queryFn: () => window.api.getDocument({ id: id! }),
   })
+
+  const { mutateAsync: saveDocument } = useMutation({
+    mutationFn: ({ content, title }: OnContentUpdatedParams) =>
+      window.api.saveDocument({ id: id!, title, content }),
+    onSuccess: (_, { title }) => {
+      queryClient.setQueryData<{ data: Document[] | undefined }>(
+        ['documents'],
+        (documents) => {
+          return {
+            data: documents?.data?.map((document) => {
+              if (document.id === id) {
+                return { ...document, title }
+              }
+
+              return document
+            }),
+          }
+        },
+      )
+    },
+  })
+
+  function handleEditorContentUpdate({
+    content,
+    title,
+  }: OnContentUpdatedParams) {
+    saveDocument({ content, title })
+  }
 
   const initialContent = useMemo(() => {
     if (response) {
@@ -33,7 +64,12 @@ export function Document() {
         </ToC.Root>
       </aside>
       <section className="flex-1 flex flex-col items-center">
-        {!isFetching && response && <Editor content={initialContent} />}
+        {!isFetching && response && (
+          <Editor
+            content={initialContent}
+            onContentUpdate={handleEditorContentUpdate}
+          />
+        )}
       </section>
     </main>
   )
