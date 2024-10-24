@@ -53,7 +53,10 @@ export function Sidebar() {
             <Navigation.SectionTitle>Workspace</Navigation.SectionTitle>
             <Navigation.SectionContent>
               {response?.data.map((document) => (
-                <Navigation.Link key={document.id}>
+                <Navigation.Link
+                  key={document.id}
+                  to={`/document/${document.id}`}
+                >
                   {document.title}
                 </Navigation.Link>
               ))}
