@@ -7,7 +7,7 @@ import { createFileRoute, createURLRoute } from 'electron-router-dom'
 
 import './ipc'
 import './store'
-import './tray'
+import { createTray } from './tray'
 
 function createWindow(): void {
   if (process.platform === 'darwin') {
@@ -31,6 +31,8 @@ function createWindow(): void {
       sandbox: false,
     },
   })
+
+  createTray(mainWindow)
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
