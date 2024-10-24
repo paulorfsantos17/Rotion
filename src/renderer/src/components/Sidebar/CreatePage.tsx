@@ -5,7 +5,6 @@ import type { Document } from '~/src/shared/types/ipc'
 export function CreatePage() {
   const queryClient = useQueryClient()
   const { isPending, mutate: createDocument } = useMutation({
-    mutationKey: ['createPage'],
     mutationFn: window.api.createDocument,
     onSuccess: (newDocument) => {
       const document: Document = {
