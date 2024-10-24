@@ -6,6 +6,7 @@ import path, { join } from 'node:path'
 import { createFileRoute, createURLRoute } from 'electron-router-dom'
 
 import './ipc'
+import './store'
 
 function createWindow(): void {
   if (process.platform === 'darwin') {
