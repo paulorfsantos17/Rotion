@@ -7,6 +7,7 @@ import { createFileRoute, createURLRoute } from 'electron-router-dom'
 
 import './ipc'
 import './store'
+import './tray'
 
 function createWindow(): void {
   if (process.platform === 'darwin') {
