@@ -8,6 +8,7 @@ import { createFileRoute, createURLRoute } from 'electron-router-dom'
 import './ipc'
 import './store'
 import { createTray } from './tray'
+import { createShortcuts } from './shotcuts'
 
 function createWindow(): void {
   if (process.platform === 'darwin') {
@@ -33,6 +34,7 @@ function createWindow(): void {
   })
 
   createTray(mainWindow)
+  createShortcuts(mainWindow)
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
